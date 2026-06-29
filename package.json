@@ -1,0 +1,45 @@
+{
+  "name": "astrel-local-blog",
+  "version": "1.0.0",
+  "description": "Astrel local-first personal blog desktop app",
+  "main": "electron-main.js",
+  "private": true,
+  "scripts": {
+    "start": "node server.js",
+    "electron": "electron .",
+    "pack:win": "electron-builder --win portable"
+  },
+  "build": {
+    "appId": "com.astrel.localblog",
+    "productName": "Astrel",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "index.html",
+      "styles.css",
+      "app.js",
+      "server.js",
+      "electron-main.js",
+      "electron-preload.js",
+      "assets/**/*",
+      "README.md",
+      "package.json"
+    ],
+    "win": {
+      "icon": "assets/icon.ico",
+      "target": [
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    }
+  },
+  "devDependencies": {
+    "electron": "^37.10.3",
+    "electron-builder": "^26.0.12"
+  }
+}

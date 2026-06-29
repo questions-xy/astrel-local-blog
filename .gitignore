@@ -1,0 +1,38 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+out/
+release/
+*.exe
+*.msi
+*.dmg
+*.AppImage
+*.zip
+
+# Local user data and uploaded personal assets
+data/
+uploads/
+backups/
+*.bak
+
+# Runtime logs
+*.log
+server.log
+server.err.log
+
+# Local environment
+.env
+.env.*
+!.env.example
+
+# Editor and OS files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Codex/local agent workspace metadata
+.agents/
+.codex/

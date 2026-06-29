@@ -1,0 +1,1037 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>个人博客工作台</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="bg-layer" id="bgLayer"></div>
+    <div class="magic-cursor" id="magicCursor" aria-hidden="true"></div>
+    <div class="magic-trail" id="magicTrail" aria-hidden="true"></div>
+    <div class="desktop-titlebar" id="desktopTitlebar" aria-hidden="true">
+      <div class="desktop-titlebar-left">
+        <button class="desktop-rail-button" type="button" aria-label="Astrel">
+          <img src="assets/icon.png" alt="" />
+        </button>
+        <div class="desktop-menu-strip" aria-label="Desktop menu">
+          <button class="desktop-menu-button" data-desktop-menu="file" type="button">&#25991;&#20214;</button>
+          <button class="desktop-menu-button" data-desktop-menu="edit" type="button">&#32534;&#36753;</button>
+          <button class="desktop-menu-button" data-desktop-menu="view" type="button">&#35270;&#22270;</button>
+          <button class="desktop-menu-button" data-desktop-menu="help" type="button">&#24110;&#21161;</button>
+        </div>
+      </div>
+      <div class="desktop-titlebar-center">
+        <span>Astrel</span>
+        <small>Local Blog Studio</small>
+      </div>
+      <div class="desktop-window-actions">
+        <button id="windowMinimizeBtn" type="button" aria-label="Minimize">&#8722;</button>
+        <button id="windowMaximizeBtn" type="button" aria-label="Maximize">&#9633;</button>
+        <button class="close" id="windowCloseBtn" type="button" aria-label="Close">&#215;</button>
+      </div>
+    </div>
+    <div class="desktop-menu-popover" id="desktopMenuPopover" hidden></div>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <button class="sidebar-toggle" id="sidebarToggle" type="button" aria-label="Toggle sidebar" aria-pressed="false">
+          <span aria-hidden="true"></span>
+        </button>
+        <div class="brand">
+          <button class="brand-mark" id="avatarButton" type="button" title="个人主页">
+            <span id="avatarFallback">星</span>
+            <img id="avatarImage" alt="头像" />
+          </button>
+          <input id="avatarUpload" class="visually-hidden" type="file" accept="image/*" />
+          <div>
+            <h1>星屑笔记</h1>
+            <p id="blogSignatureText">Local-first Blog Studio</p>
+          </div>
+        </div>
+
+        <nav class="nav-list" aria-label="主导航">
+          <button class="nav-item" data-view="public"><span class="nav-icon">⊙</span><span class="nav-label">公开</span></button>
+          <button class="nav-item active" data-view="home"><span class="nav-icon">⌂</span><span class="nav-label">首页</span></button>
+          <button class="nav-item" data-view="editor"><span class="nav-icon">✎</span><span class="nav-label">写作</span></button>
+          <button class="nav-item" data-view="checkins"><span class="nav-icon">✓</span><span class="nav-label">打卡</span></button>
+          <button class="nav-item" data-view="exam"><span class="nav-icon">研</span><span class="nav-label">考研</span></button>
+          <button class="nav-item" data-view="words"><span class="nav-icon">词</span><span class="nav-label">单词</span></button>
+          <button class="nav-item" data-view="word-overview"><span class="nav-icon">库</span><span class="nav-label">词库</span></button>
+          <button class="nav-item" data-view="pomodoro"><span class="nav-icon">◴</span><span class="nav-label">番茄钟</span></button>
+          <button class="nav-item" data-view="achievements"><span class="nav-icon">奖</span><span class="nav-label">成就</span></button>
+          <button class="nav-item" data-view="photos"><span class="nav-icon">□</span><span class="nav-label">照片墙</span></button>
+          <button class="nav-item" data-view="archive"><span class="nav-icon">◎</span><span class="nav-label">归档</span></button>
+          <button class="nav-item" data-view="data"><span class="nav-icon">▦</span><span class="nav-label">数据</span></button>
+          <button class="nav-item" data-view="settings"><span class="nav-icon">⚙</span><span class="nav-label">设置</span></button>
+        </nav>
+      </aside>
+
+      <main class="main-panel">
+        <header class="topbar">
+          <div class="search-wrap">
+            <span aria-hidden="true">⌕</span>
+            <input id="searchInput" type="search" placeholder="搜索标题、正文、标签" />
+          </div>
+          <div class="topbar-actions">
+            <button class="icon-button" id="themeToggle" title="切换主题">◐</button>
+            <button class="primary-button" id="newPostBtn">新文章</button>
+          </div>
+        </header>
+
+        <section class="view active" id="view-home">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">Blog</p>
+              <h2>文章列表</h2>
+            </div>
+            <div class="chips" id="tagFilters"></div>
+          </div>
+          <div class="post-grid" id="postGrid"></div>
+        </section>
+
+        <section class="view" id="view-public">
+          <div class="public-page">
+            <header class="public-hero">
+              <div>
+                <p class="eyebrow">Public Blog</p>
+                <h2 id="publicBlogName">星屑笔记</h2>
+                <p id="publicBlogSignature">Local-first Blog Studio</p>
+              </div>
+              <nav class="public-tabs" aria-label="公开博客导航">
+                <button class="active" data-public-view="public" type="button">文章</button>
+                <button data-public-view="public-gallery" type="button">照片墙</button>
+                <button data-public-view="public-about" type="button">关于</button>
+              </nav>
+            </header>
+            <div class="public-stats" id="publicStats"></div>
+            <div class="public-post-grid" id="publicPostGrid"></div>
+          </div>
+        </section>
+
+        <section class="view" id="view-public-post">
+          <article class="public-reader">
+            <button class="ghost-button" id="backToPublicBtn" type="button">返回公开博客</button>
+            <header>
+              <p class="eyebrow" id="publicPostMeta">Article</p>
+              <h2 id="publicPostTitle">文章标题</h2>
+              <div class="tag-row" id="publicPostTags"></div>
+            </header>
+            <div class="markdown-body reader-body" id="publicPostContent"></div>
+          </article>
+        </section>
+
+        <section class="view" id="view-public-gallery">
+          <div class="public-page">
+            <header class="public-hero compact">
+              <div>
+                <p class="eyebrow">Gallery</p>
+                <h2>公开照片墙</h2>
+                <p>只读展示当前照片墙内容，后续联网后可以设置单面照片墙是否公开。</p>
+              </div>
+              <nav class="public-tabs" aria-label="公开博客导航">
+                <button data-public-view="public" type="button">文章</button>
+                <button class="active" data-public-view="public-gallery" type="button">照片墙</button>
+                <button data-public-view="public-about" type="button">关于</button>
+              </nav>
+            </header>
+            <div class="public-wall-tabs" id="publicWallTabs"></div>
+            <div class="public-gallery-grid" id="publicGalleryGrid"></div>
+          </div>
+        </section>
+
+        <section class="view" id="view-public-about">
+          <div class="public-page public-about">
+            <header class="public-hero compact">
+              <div>
+                <p class="eyebrow">About</p>
+                <h2>关于我</h2>
+                <p>公开展示的个人资料。</p>
+              </div>
+              <nav class="public-tabs" aria-label="公开博客导航">
+                <button data-public-view="public" type="button">文章</button>
+                <button data-public-view="public-gallery" type="button">照片墙</button>
+                <button class="active" data-public-view="public-about" type="button">关于</button>
+              </nav>
+            </header>
+            <div class="public-profile-card">
+              <div class="public-avatar">
+                <img id="publicAvatarImage" alt="公开头像" />
+                <span id="publicAvatarFallback">星</span>
+              </div>
+              <div>
+                <h3 id="publicProfileName">关于我</h3>
+                <p id="publicProfileSignature">Local-first Blog Studio</p>
+                <p id="publicProfileBio">这里可以写你的介绍、方向、作品和联系方式。</p>
+                <p id="publicProfileLinks"></p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="view" id="view-exam">
+          <div class="exam-page">
+            <header class="exam-hero">
+              <div>
+                <p class="eyebrow">Postgraduate Exam</p>
+                <h2>考研学习台</h2>
+                <p>倒计时、复盘、背诵、奖励和学习热力图会保存在本地。</p>
+              </div>
+              <div class="exam-hero-actions">
+                <button class="ghost-button" id="examReportBtn" type="button">生成周报</button>
+                <button class="ghost-button" id="examFocusToggleBtn" type="button">考研专注模式</button>
+              </div>
+            </header>
+
+            <section class="exam-countdown-card">
+              <div>
+                <span>距离初试</span>
+                <strong id="examCountdownDays">0</strong>
+                <small id="examStageText">设置目标日期后开始倒计时</small>
+              </div>
+              <form class="exam-target-form" id="examTargetForm">
+                <label>
+                  初试日期
+                  <input id="examTargetDate" type="date" />
+                </label>
+                <label>
+                  当前目标
+                  <input id="examGoalText" placeholder="例如：英语 75 / 总分 380" />
+                </label>
+                <button class="primary-button" type="submit">保存目标</button>
+              </form>
+            </section>
+
+            <div class="exam-stats" id="examStats"></div>
+
+            <section class="exam-panel exam-report-panel">
+              <div class="panel-head">
+                <div>
+                  <p class="eyebrow">Weekly Report</p>
+                  <h3>周报档案</h3>
+                </div>
+                <span>每周日自动生成，错过会在下次打开时补齐</span>
+              </div>
+              <div class="exam-report-list" id="examReportList"></div>
+            </section>
+
+            <section class="exam-panel exam-start-panel">
+              <div class="panel-head">
+                <div>
+                  <p class="eyebrow">Today</p>
+                  <h3>每日启动页</h3>
+                </div>
+                <span id="examTodayDate">今天</span>
+              </div>
+              <div class="exam-start-grid" id="examStartGrid"></div>
+            </section>
+
+            <div class="exam-grid">
+              <section class="exam-panel">
+                <div class="panel-head">
+                  <div>
+                    <p class="eyebrow">Review</p>
+                    <h3>每日 / 每周复盘</h3>
+                  </div>
+                </div>
+                <form class="exam-review-form" id="examReviewForm">
+                  <div class="form-row split">
+                    <div>
+                      <label for="examReviewDate">日期</label>
+                      <input id="examReviewDate" type="date" />
+                    </div>
+                    <div>
+                      <label for="examReviewType">类型</label>
+                      <select id="examReviewType">
+                        <option value="daily">每日复盘</option>
+                        <option value="weekly">每周复盘</option>
+                      </select>
+                    </div>
+                  </div>
+                  <label>
+                    复盘内容
+                    <textarea id="examReviewContent" placeholder="今天完成了什么？哪里卡住了？"></textarea>
+                  </label>
+                  <label>
+                    下一步调整
+                    <input id="examReviewNext" placeholder="明天/下周最重要的一件事" />
+                  </label>
+                  <button class="primary-button" type="submit">保存复盘</button>
+                </form>
+                <div class="exam-review-list" id="examReviewList"></div>
+              </section>
+
+              <section class="exam-panel">
+                <div class="panel-head">
+                  <div>
+                    <p class="eyebrow">Memory</p>
+                    <h3>背诵任务</h3>
+                  </div>
+                  <span id="examMemoryDueCount">0 个待复习</span>
+                </div>
+                <form class="exam-memory-form" id="examMemoryForm">
+                  <div class="form-row split">
+                    <div>
+                      <label for="examMemoryTitle">标题</label>
+                      <input id="examMemoryTitle" placeholder="政治知识点 / 作文模板 / 专业课名词" />
+                    </div>
+                    <div>
+                      <label for="examMemorySubject">科目</label>
+                      <input id="examMemorySubject" placeholder="英语 / 政治 / 数学 / 专业课" />
+                    </div>
+                  </div>
+                  <label>
+                    背诵内容
+                    <textarea id="examMemoryContent" placeholder="写下需要背诵的内容，之后按记忆曲线复习"></textarea>
+                  </label>
+                  <button class="primary-button" type="submit">加入背诵</button>
+                </form>
+                <div class="exam-memory-list" id="examMemoryList"></div>
+              </section>
+            </div>
+
+            <section class="exam-panel">
+              <div class="panel-head">
+                <div>
+                  <p class="eyebrow">Rewards</p>
+                  <h3>奖励徽章</h3>
+                </div>
+              </div>
+              <div class="exam-badges" id="examBadges"></div>
+            </section>
+
+            <section class="exam-panel">
+              <div class="panel-head">
+                <div>
+                  <p class="eyebrow">Heatmap</p>
+                  <h3>学习日历热力图</h3>
+                </div>
+                <div class="exam-heatmap-tools">
+                  <span id="examHeatmapRange">近 14 周学习强度</span>
+                  <div class="view-switch compact-switch" id="examHeatmapMode">
+                    <button class="active" data-heatmap-mode="daily" type="button">每日</button>
+                    <button data-heatmap-mode="weekly" type="button">每周</button>
+                    <button data-heatmap-mode="monthly" type="button">每月</button>
+                  </div>
+                </div>
+              </div>
+              <div class="exam-heatmap" id="examHeatmap"></div>
+            </section>
+          </div>
+        </section>
+
+        <section class="view" id="view-editor">
+          <div class="editor-layout">
+            <form class="editor-form" id="postForm">
+              <div class="form-row">
+                <label for="postTitle">标题</label>
+                <input id="postTitle" required placeholder="今天写点什么？" />
+              </div>
+              <div class="form-row">
+                <label for="postSummary">摘要</label>
+                <input id="postSummary" placeholder="给未来的自己留一句引子" />
+              </div>
+              <div class="form-row split">
+                <div>
+                  <label for="postTags">标签</label>
+                  <input id="postTags" placeholder="前端, 学习, 生活" />
+                </div>
+                <div>
+                  <label for="postCategory">分类</label>
+                  <input id="postCategory" placeholder="技术 / 日常 / 阅读" />
+                </div>
+              </div>
+              <div class="form-row split">
+                <div>
+                  <label for="postStatus">状态</label>
+                  <select id="postStatus">
+                    <option value="published">发布</option>
+                    <option value="draft">草稿</option>
+                  </select>
+                </div>
+                <div>
+                  <label for="postDate">日期</label>
+                  <input id="postDate" type="date" />
+                </div>
+              </div>
+              <div class="form-row grow">
+                <label for="markdownInput">Markdown</label>
+                <textarea id="markdownInput" spellcheck="false"></textarea>
+              </div>
+              <div class="editor-actions">
+                <span class="autosave-status" id="autosaveStatus">自动保存已就绪</span>
+                <button type="button" class="ghost-button" id="deletePostBtn">删除</button>
+                <button type="submit" class="primary-button">保存文章</button>
+              </div>
+            </form>
+            <article class="preview-pane">
+              <div class="preview-head">
+                <span>实时预览</span>
+                <strong id="previewTitle">Untitled</strong>
+              </div>
+              <div class="markdown-body" id="markdownPreview"></div>
+            </article>
+          </div>
+        </section>
+
+        <section class="view" id="view-reader">
+          <article class="reader-panel">
+            <header class="reader-head">
+              <div>
+                <p class="eyebrow" id="readerMeta">Article</p>
+                <h2 id="readerTitle">文章标题</h2>
+                <div class="tag-row" id="readerTags"></div>
+              </div>
+              <div class="reader-actions">
+                <button class="ghost-button" id="backToPostsBtn" type="button">返回列表</button>
+                <button class="ghost-button" id="pinPostBtn" type="button">置顶</button>
+                <button class="ghost-button" id="favoritePostBtn" type="button">收藏</button>
+                <button class="ghost-button" id="focusReadBtn" type="button">专注阅读</button>
+                <button class="ghost-button danger-button" id="deleteReaderPostBtn" type="button">删除</button>
+                <button class="primary-button" id="editCurrentPostBtn" type="button">编辑</button>
+              </div>
+            </header>
+            <div class="reader-progress"><span id="readerProgressBar"></span></div>
+            <button class="reader-focus-exit ghost-button" id="readerFocusExitBtn" type="button">退出专注</button>
+            <div class="reader-layout">
+              <aside class="reader-toc" id="readerToc"></aside>
+              <div class="markdown-body reader-body" id="readerContent"></div>
+            </div>
+            <footer class="reader-nav">
+              <button class="ghost-button" id="prevPostBtn" type="button">上一篇</button>
+              <button class="ghost-button" id="nextPostBtn" type="button">下一篇</button>
+            </footer>
+          </article>
+        </section>
+
+        <section class="view" id="view-checkins">
+          <div class="tick-layout">
+            <aside class="tick-sidebar">
+              <button class="tick-nav active" data-task-filter="today"><span>▣ 今天</span><strong id="todayTaskCount">0</strong></button>
+              <button class="tick-nav" data-task-filter="recent"><span>◷ 最近7天</span><strong id="recentTaskCount">0</strong></button>
+              <button class="tick-nav" data-task-filter="done"><span>☑ 已完成</span><strong id="doneTaskCount">0</strong></button>
+              <div class="tick-group-title">清单</div>
+              <button class="tick-list" data-task-type="work"><span>💼 工作任务</span><strong id="workTaskCount">0</strong></button>
+              <button class="tick-list" data-task-type="study"><span>📖 学习安排</span><strong id="studyTaskCount">0</strong></button>
+              <button class="tick-list" data-task-type="life"><span>🏠 个人备忘</span><strong id="lifeTaskCount">0</strong></button>
+              <div class="tick-note">
+                <strong>标签</strong>
+                <span>可以在任务里写 #关键词，之后扩展为标签过滤。</span>
+              </div>
+              <div class="tick-bottom">
+                <span>连续打卡</span>
+                <strong id="streakCount">0 天</strong>
+              </div>
+            </aside>
+            <section class="tick-main">
+              <header class="tick-header">
+                <div>
+                  <p class="eyebrow">Daily</p>
+                  <h2 id="taskViewTitle">今天</h2>
+                </div>
+                <div class="tick-tools">
+                  <div class="view-switch">
+                    <button class="active" id="taskListViewBtn" type="button">列表</button>
+                    <button id="taskMonthViewBtn" type="button">月视图</button>
+                    <button id="taskScheduleViewBtn" type="button">日程</button>
+                  </div>
+                </div>
+              </header>
+              <div class="task-list-view active" id="taskListView">
+                <form class="checkin-compose" id="checkinForm">
+                  <input id="checkinText" placeholder="+ 添加任务" />
+                  <input id="checkinDate" type="date" />
+                  <button class="ghost-button compact quick-date-btn" id="tomorrowTaskBtn" type="button">&#26126;&#22825;</button>
+                  <select id="checkinType">
+                    <option value="work">工作</option>
+                    <option value="study">学习</option>
+                    <option value="life">生活</option>
+                  </select>
+                  <select id="checkinSubject"></select>
+                  <button class="primary-button" type="submit">添加</button>
+                </form>
+                <div class="task-section-head">
+                  <span id="taskSectionLabel">今日安排</span>
+                  <button class="ghost-button compact" id="clearDoneBtn" type="button">清理完成</button>
+                </div>
+                <div class="task-list" id="taskList"></div>
+              </div>
+              <div class="task-month-view" id="taskMonthView">
+                <div class="month-toolbar">
+                  <button class="icon-button" id="prevMonthBtn" type="button">‹</button>
+                  <strong id="monthTitle">本月</strong>
+                  <button class="icon-button" id="nextMonthBtn" type="button">›</button>
+                  <button class="ghost-button compact" id="todayMonthBtn" type="button">今天</button>
+                </div>
+                <div class="month-weekdays">
+                  <span>周日</span>
+                  <span>周一</span>
+                  <span>周二</span>
+                  <span>周三</span>
+                  <span>周四</span>
+                  <span>周五</span>
+                  <span>周六</span>
+                </div>
+                <div class="month-grid" id="monthGrid"></div>
+              </div>
+              <div class="task-schedule-view" id="taskScheduleView">
+                <div class="schedule-list" id="scheduleList"></div>
+              </div>
+            </section>
+            <aside class="tick-detail">
+              <div class="tick-illustration">✦</div>
+              <h3>完成记录</h3>
+              <p>每天完成至少一项任务，就会计入连续打卡。</p>
+              <div class="calendar-strip" id="calendarStrip"></div>
+            </aside>
+          </div>
+        </section>
+
+        <section class="view" id="view-words">
+          <div class="words-layout">
+            <aside class="words-side">
+              <p class="eyebrow">Vocabulary</p>
+              <h2>单词打卡</h2>
+              <div class="word-stats">
+                <div><span>今日待复习</span><strong id="wordDueCount">0</strong></div>
+                <div><span>新词</span><strong id="wordNewCount">0</strong></div>
+                <div><span>错词</span><strong id="wordWrongCount">0</strong></div>
+                <div><span>已掌握</span><strong id="wordKnownCount">0</strong></div>
+                <div><span>连续打卡</span><strong id="wordStreakCount">0天</strong></div>
+              </div>
+              <label class="word-goal-setting">
+                <span>每日新学单词</span>
+                <input id="wordDailyGoal" type="number" min="1" max="500" />
+              </label>
+              <div class="word-filterbar">
+                <button class="active" data-word-mode="review" type="button">复习</button>
+                <button data-word-mode="new" type="button">新词</button>
+                <button data-word-mode="wrong" type="button">错词本</button>
+                <button data-word-mode="all" type="button">全部</button>
+              </div>
+              <form class="word-add-form" id="wordAddForm">
+                <input id="wordText" placeholder="单词" />
+                <input id="wordMeaning" placeholder="释义" />
+                <input id="wordExample" placeholder="例句，可选" />
+                <button class="primary-button" type="submit">加入词库</button>
+              </form>
+              <div class="word-import">
+                <label class="file-button compact">
+                  导入词库
+                  <input id="wordImportInput" type="file" accept=".csv,.json,application/json,text/csv" />
+                </label>
+                <button class="ghost-button compact" id="wordExportBtn" type="button">导出词库</button>
+                <span id="wordImportStatus">支持 CSV / JSON</span>
+              </div>
+              <details class="word-format-help">
+                <summary>导入格式说明</summary>
+                <div>
+                  <p>最简单的方法：用 Excel / WPS 建三列，然后另存为 CSV。</p>
+                  <div class="format-table">
+                    <div><strong>第 1 列</strong><span>单词，例如 abandon</span></div>
+                    <div><strong>第 2 列</strong><span>中文释义，例如 放弃；抛弃</span></div>
+                    <div><strong>第 3 列</strong><span>例句，可不填</span></div>
+                  </div>
+                  <div class="format-example">
+                    <span>示例一行</span>
+                    <strong>abandon ｜ 放弃；抛弃 ｜ Do not abandon your plan.</strong>
+                  </div>
+                  <p>第一行可以写表头：单词、释义、例句。重复单词会自动跳过。</p>
+                </div>
+              </details>
+            </aside>
+            <main class="word-study">
+              <div class="word-card" id="wordCard">
+                <div class="word-card-top">
+                  <span id="wordStage">今日复习</span>
+                  <strong id="wordProgress">0 / 0</strong>
+                </div>
+                <h2 id="studyWord">Ready?</h2>
+                <p id="studyMeaning">点击开始，按记忆曲线复习单词。</p>
+                <p class="word-example" id="studyExample"></p>
+                <button class="ghost-button" id="revealWordBtn" type="button">显示释义</button>
+              </div>
+              <div class="word-actions">
+                <button class="ghost-button" id="againWordBtn" type="button">不认识</button>
+                <button class="ghost-button" id="hardWordBtn" type="button">模糊</button>
+                <button class="primary-button" id="knownWordBtn" type="button">认识</button>
+              </div>
+              <div class="word-plan">
+                <h3>复习计划</h3>
+                <div id="wordPlanList"></div>
+              </div>
+              <div class="word-library">
+                <div class="word-library-head">
+                  <h3>词库管理</h3>
+                  <input id="wordSearchInput" placeholder="搜索单词 / 释义" />
+                </div>
+                <div class="word-library-pager" id="wordLibraryPager"></div>
+                <div class="wordLibraryList" id="wordLibraryList"></div>
+              </div>
+            </main>
+          </div>
+        </section>
+
+        <section class="view" id="view-word-overview">
+          <div class="word-overview">
+            <header class="section-head">
+              <div>
+                <p class="eyebrow">Vocabulary</p>
+                <h2>单词总览</h2>
+              </div>
+              <div class="word-overview-tools">
+                <input id="wordOverviewSearch" placeholder="搜索单词 / 释义 / 例句" />
+                <button class="ghost-button danger-button" id="resetWordMemoryBtn" type="button">重置背诵记录</button>
+                <button class="primary-button" id="backToWordStudyBtn" type="button">去背诵</button>
+              </div>
+            </header>
+            <div class="overview-stats" id="wordOverviewStats"></div>
+            <section class="memory-curve-card">
+              <div class="memory-curve-head">
+                <div>
+                  <h3>记忆曲线</h3>
+                  <span>按天统计已背单词的掌握结果</span>
+                </div>
+                <div class="memory-legend">
+                  <span class="unknown">不认识</span>
+                  <span class="fuzzy">模糊</span>
+                  <span class="known">认识</span>
+                </div>
+              </div>
+              <div class="memory-curve" id="wordMemoryCurve"></div>
+            </section>
+            <div class="overview-filterbar" id="wordOverviewFilters">
+              <button class="active" data-overview-filter="all" type="button">全部</button>
+              <button data-overview-filter="unknown" type="button">不认识</button>
+              <button data-overview-filter="fuzzy" type="button">模糊</button>
+              <button data-overview-filter="known" type="button">认识</button>
+            </div>
+            <div class="overview-pager" id="wordOverviewPager"></div>
+            <div class="word-overview-list" id="wordOverviewList"></div>
+          </div>
+        </section>
+
+        <section class="view" id="view-pomodoro">
+          <div class="pomodoro-layout">
+            <section class="pomodoro-main">
+              <header class="pomodoro-head">
+                <div>
+                  <p class="eyebrow">Focus</p>
+                  <h2>番茄专注</h2>
+                </div>
+                <div class="view-switch">
+                  <button class="active" id="pomodoroModeBtn" type="button">番茄计时</button>
+                  <button id="stopwatchModeBtn" type="button">正计时</button>
+                </div>
+              </header>
+              <div class="timer-ring" id="timerRing">
+                <svg class="timer-ring-svg" viewBox="0 0 220 220" aria-hidden="true">
+                  <defs>
+                    <linearGradient id="timerRingGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stop-color="#ff6fae" />
+                      <stop offset="100%" stop-color="#4fc3f7" />
+                    </linearGradient>
+                    <filter id="timerRingGlow" x="-35%" y="-35%" width="170%" height="170%">
+                      <feGaussianBlur stdDeviation="4" result="blur" />
+                      <feMerge>
+                        <feMergeNode in="blur" />
+                        <feMergeNode in="SourceGraphic" />
+                      </feMerge>
+                    </filter>
+                  </defs>
+                  <circle class="timer-ring-track" cx="110" cy="110" r="96"></circle>
+                  <circle class="timer-ring-progress" id="timerRingProgress" cx="110" cy="110" r="96"></circle>
+                </svg>
+                <span id="timerLabel">专注</span>
+                <strong id="timerDisplay">25:00</strong>
+              </div>
+              <div class="timer-actions">
+                <button class="primary-button" id="timerStartBtn" type="button">开始</button>
+                <button class="ghost-button" id="timerSaveBtn" type="button" hidden>记录本次</button>
+                <button class="ghost-button" id="timerResetBtn" type="button">重置</button>
+              </div>
+              <div class="timer-settings">
+                <label>专注分钟<input id="focusMinutes" type="number" min="1" max="120" /></label>
+                <label>休息分钟<input id="breakMinutes" type="number" min="1" max="60" /></label>
+                <label>学习种类<select id="focusSubjectSelect"></select></label>
+              </div>
+              <div class="focus-subject-add">
+                <input id="focusSubjectName" type="text" placeholder="新增自定义种类" />
+                <button class="ghost-button" id="addFocusSubjectBtn" type="button">添加种类</button>
+              </div>
+              <div class="focus-subject-list" id="focusSubjectList"></div>
+            </section>
+            <aside class="pomodoro-side">
+              <h3>概览</h3>
+              <div class="focus-stats">
+                <div><span>今日番茄</span><strong id="todayPomodoroCount">0</strong></div>
+                <div><span>今日专注时长</span><strong id="todayFocusMinutes">0m</strong></div>
+                <div><span>总番茄</span><strong id="totalPomodoroCount">0</strong></div>
+                <div><span>总专注时长</span><strong id="totalFocusMinutes">0m</strong></div>
+              </div>
+              <section class="focus-chart-panel">
+                <div class="focus-record-head">
+                  <h3>今日学习分布</h3>
+                  <div class="focus-chart-controls">
+                    <input id="focusChartDate" type="date" />
+                    <span id="focusChartTotal">0m</span>
+                  </div>
+                </div>
+                <div class="focus-chart-row">
+                  <div class="focus-pie-chart" id="focusPieChart"></div>
+                  <div class="focus-subject-legend" id="focusSubjectLegend"></div>
+                </div>
+              </section>
+              <section class="focus-chart-panel">
+                <div class="focus-record-head">
+                  <h3>阶段学习统计</h3>
+                  <div class="view-switch compact-switch" id="focusRangeSwitch">
+                    <button class="active" data-focus-range="week" type="button">周</button>
+                    <button data-focus-range="month" type="button">月</button>
+                  </div>
+                </div>
+                <div class="focus-stack-chart" id="focusStackChart"></div>
+              </section>
+              <div class="focus-record-head">
+                <h3>专注记录</h3>
+                <button class="ghost-button compact" id="clearFocusRecordsBtn" type="button">清空</button>
+              </div>
+              <div class="focus-records" id="focusRecords"></div>
+            </aside>
+          </div>
+        </section>
+
+        <section class="view" id="view-achievements">
+          <div class="achievements-page">
+            <header class="achievements-hero">
+              <div>
+                <p class="eyebrow">Achievements</p>
+                <h2>成就中心</h2>
+                <p>按考研长期计划拆成 5 级路线：连续备考、累计专注、深度学习日、复盘、周报和资料沉淀都会逐级解锁，越往后越接近真实备考强度。</p>
+              </div>
+              <div class="achievement-hero-badge" aria-hidden="true">
+                <span>✦</span>
+                <strong id="achievementHeroProgress">0%</strong>
+              </div>
+            </header>
+            <div class="achievements-stats" id="achievementStats"></div>
+            <div class="achievement-grid" id="achievementGrid"></div>
+          </div>
+        </section>
+
+        <section class="view" id="view-photos">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">Gallery</p>
+              <h2>自由照片墙</h2>
+            </div>
+            <label class="file-button">
+              上传照片
+              <input id="photoUpload" type="file" accept="image/*" multiple />
+            </label>
+            <button class="primary-button" id="addPhotoWallBtn" type="button">新照片墙</button>
+            <span class="upload-status" id="photoStatus"></span>
+          </div>
+          <div class="wall-switcher" id="wallSwitcher"></div>
+          <div class="wall-management">
+            <button class="ghost-button compact" id="renameWallBtn" type="button">重命名当前墙</button>
+            <button class="ghost-button compact" id="duplicateWallBtn" type="button">复制当前墙</button>
+            <button class="ghost-button compact danger-button" id="deleteWallBtn" type="button">删除当前墙</button>
+          </div>
+          <div class="photo-wall" id="photoWall"></div>
+        </section>
+
+        <section class="view" id="view-archive">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">Timeline</p>
+              <h2>时间归档</h2>
+            </div>
+          </div>
+          <div class="archive-list" id="archiveList"></div>
+        </section>
+
+        <section class="view" id="view-data">
+          <div class="data-center">
+            <div class="section-head">
+              <div>
+                <p class="eyebrow">Data</p>
+                <h2>数据中心</h2>
+              </div>
+              <button class="primary-button" id="exportAllDataBtn" type="button">导出完整备份</button>
+            </div>
+            <div class="data-grid" id="dataGrid"></div>
+            <section class="data-dashboard" id="dataDashboard"></section>
+            <div class="data-health" id="dataHealth"></div>
+            <section class="desktop-data-panel" id="desktopDataPanel" hidden>
+              <div>
+                <p class="eyebrow">Desktop</p>
+                <h3>&#26700;&#38754;&#25968;&#25454;&#20445;&#31649;</h3>
+                <p class="muted">&#32972;&#26223;&#12289;&#22836;&#20687;&#12289;&#38899;&#20048;&#12289;&#25171;&#21345;&#21644;&#35745;&#26102;&#37117;&#20445;&#23384;&#22312;&#36825;&#20010;&#26412;&#22320;&#30446;&#24405;&#12290;</p>
+              </div>
+              <div class="desktop-path-card">
+                <span>&#25968;&#25454;&#36335;&#24452;</span>
+                <code id="desktopDataPath">-</code>
+              </div>
+              <div class="data-actions compact-actions">
+                <button class="ghost-button" id="openDesktopDataBtn" type="button">&#25171;&#24320;&#25968;&#25454;&#30446;&#24405;</button>
+                <button class="ghost-button" id="desktopBackupBtn" type="button">&#21019;&#24314;&#26700;&#38754;&#22791;&#20221;</button>
+                <button class="ghost-button" id="desktopRestoreBtn" type="button">&#20174;&#22791;&#20221;&#24674;&#22797;</button>
+              </div>
+              <p class="desktop-data-status" id="desktopDataStatus"></p>
+            </section>
+            <div class="data-actions">
+              <button class="ghost-button" id="clearFocusDataBtn" type="button">清空专注记录</button>
+              <button class="ghost-button" id="clearDoneTasksBtn" type="button">清空已完成任务</button>
+              <button class="ghost-button danger-button" id="resetDataBtn" type="button">重置全部数据</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="view" id="view-about">
+          <div class="about-panel">
+            <div class="profile-card">
+              <p class="eyebrow">Profile</p>
+              <button class="profile-avatar" id="profileAvatarButton" type="button">
+                <img id="profileAvatarImage" alt="个人头像" />
+                <span id="profileAvatarFallback">星</span>
+              </button>
+              <h2 id="aboutName">关于我</h2>
+              <p id="profileSignatureDisplay">Local-first Blog Studio</p>
+              <p id="aboutBio">这里可以写你的介绍、方向、作品和联系方式。</p>
+              <div class="profile-stats">
+                <div><span>文章</span><strong id="profilePostCount">0</strong></div>
+                <div><span>照片墙</span><strong id="profileWallCount">0</strong></div>
+                <div><span>单词</span><strong id="profileWordCount">0</strong></div>
+              </div>
+              <div class="profile-dashboard" id="profileDashboard"></div>
+            </div>
+            <form id="aboutForm" class="settings-form about-form">
+              <label class="profile-field">
+                <span>名字</span>
+                <input id="profileName" placeholder="你的名字" />
+              </label>
+              <label class="profile-field profile-field-wide">
+                <span>介绍</span>
+                <textarea id="profileBio" placeholder="写一段介绍"></textarea>
+              </label>
+              <label class="profile-field">
+                <span>链接</span>
+                <input id="profileLinks" placeholder="GitHub / B站 / 邮箱" />
+              </label>
+              <button class="primary-button" type="submit">保存资料</button>
+            </form>
+          </div>
+        </section>
+
+        <section class="view" id="view-settings">
+          <div class="settings-grid">
+            <aside class="settings-side">
+              <p class="eyebrow">Theme</p>
+              <h2>个性设置</h2>
+              <p class="muted">背景图会保存在本地浏览器中。</p>
+              <nav class="settings-nav" aria-label="设置分组">
+                <button type="button" data-settings-target="settings-basic">基础信息</button>
+                <button type="button" data-settings-target="settings-background">背景外观</button>
+                <button type="button" data-settings-target="settings-music">背景音乐</button>
+                <button type="button" data-settings-target="settings-backup">数据备份</button>
+              </nav>
+              <div class="settings-preview">
+                <div class="preview-avatar">
+                  <img id="settingsPreviewAvatar" alt="头像预览" />
+                  <span id="settingsPreviewFallback">星</span>
+                </div>
+                <strong id="settingsPreviewName">星屑笔记</strong>
+                <span id="settingsPreviewSignature">Local-first Blog Studio</span>
+                <div class="preview-stats">
+                  <div><small>背景</small><b id="settingsPreviewBg">未设置</b></div>
+                  <div><small>音乐</small><b id="settingsPreviewMusic">默认</b></div>
+                  <div><small>照片墙</small><b id="settingsPreviewWalls">1</b></div>
+                </div>
+              </div>
+            </aside>
+            <form id="settingsForm" class="settings-form">
+              <section class="settings-section" id="settings-basic">
+                <h3>基础信息</h3>
+                <label>
+                  博客名称
+                  <input id="blogName" placeholder="星屑笔记" />
+                </label>
+                <label>
+                  个性签名
+                  <input id="blogSignature" placeholder="Local-first Blog Studio" />
+                </label>
+                <label>
+                  博客正文字号
+                  <input id="bodyFontSize" type="range" min="14" max="22" step="1" />
+                </label>
+              </section>
+              <section class="settings-section" id="settings-background">
+                <h3>背景外观</h3>
+                <div class="background-picker">
+                  <div class="background-preview" id="backgroundPreview">
+                    <span>未设置背景</span>
+                  </div>
+                  <div class="background-picker-copy">
+                    <strong>二次元背景</strong>
+                    <span id="backgroundStatus">选择一张图片作为页面背景</span>
+                    <div class="background-picker-actions">
+                      <label class="file-button">
+                        选择图片
+                        <input id="backgroundUpload" type="file" accept="image/*" />
+                      </label>
+                      <button class="ghost-button" id="clearBackgroundBtn" type="button">清除背景</button>
+                    </div>
+                  </div>
+                </div>
+                <label>
+                  背景透明度
+                  <input id="bgOpacity" type="range" min="0.25" max="1" step="0.05" />
+                </label>
+                <label>
+                  界面透明度
+                  <input id="uiOpacity" type="range" min="0.35" max="0.95" step="0.05" />
+                </label>
+              <label>
+                高斯模糊
+                <input id="blurAmount" type="range" min="0" max="24" step="1" />
+              </label>
+              <label>
+                每日新学单词数
+                <input id="dailyWordGoal" type="number" min="1" max="500" />
+              </label>
+                <div class="form-row split">
+                  <div>
+                    <label for="bgMode">显示模式</label>
+                    <select id="bgMode">
+                      <option value="character">角色背景</option>
+                      <option value="cover">铺满屏幕</option>
+                      <option value="contain">完整显示</option>
+                      <option value="repeat">平铺纹理</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label for="bgPosition">背景位置</label>
+                    <select id="bgPosition">
+                      <option value="right bottom">右下</option>
+                      <option value="center center">居中</option>
+                      <option value="left bottom">左下</option>
+                      <option value="right center">右侧</option>
+                      <option value="center top">顶部</option>
+                    </select>
+                  </div>
+                </div>
+              </section>
+              <section class="settings-section" id="settings-music">
+                <h3>背景音乐</h3>
+                <div class="music-settings">
+                  <div>
+                    <strong>背景音乐</strong>
+                    <span id="musicStatus">默认音乐已就绪</span>
+                  </div>
+                  <div class="music-actions">
+                    <button class="ghost-button" id="musicToggleBtn" type="button">播放</button>
+                    <label class="file-button compact">
+                      更换音乐
+                      <input id="musicUpload" type="file" accept="audio/*" />
+                    </label>
+                    <button class="ghost-button" id="clearMusicBtn" type="button">恢复默认</button>
+                  </div>
+                  <label>
+                    音量
+                    <input id="musicVolume" type="range" min="0" max="1" step="0.05" />
+                  </label>
+                </div>
+              </section>
+              <section class="settings-section" id="settings-backup">
+                <h3>数据备份</h3>
+                <div class="settings-actions">
+                  <button class="ghost-button" id="exportBtn" type="button">导出备份</button>
+                  <label class="file-button compact">
+                    导入备份
+                    <input id="importInput" type="file" accept="application/json" />
+                  </label>
+                  <button class="primary-button" type="submit">保存设置</button>
+                </div>
+              </section>
+            </div>
+            </form>
+          </div>
+        </section>
+      </main>
+    </div>
+    <div class="achievement-toast" id="achievementToast" aria-hidden="true"></div>
+
+    <template id="emptyTemplate">
+      <div class="empty-state">
+        <strong>这里还很安静</strong>
+        <span>先写下第一篇文章，或者上传几张喜欢的图片。</span>
+      </div>
+    </template>
+
+    <div class="crop-modal" id="avatarCropModal" aria-hidden="true">
+      <div class="crop-dialog">
+        <div class="crop-head">
+          <h3>裁剪头像</h3>
+          <button class="icon-button" id="cancelAvatarCropBtn" type="button">×</button>
+        </div>
+        <div class="crop-stage" id="cropStage">
+          <img id="cropImage" alt="头像裁剪预览" />
+          <div class="crop-box" id="cropBox"></div>
+        </div>
+        <div class="crop-actions">
+          <button class="ghost-button" id="resetCropBtn" type="button">居中</button>
+          <button class="primary-button" id="saveAvatarCropBtn" type="button">使用头像</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="confirm-modal" id="avatarConfirmModal" aria-hidden="true">
+      <div class="confirm-dialog">
+        <div>
+          <p class="eyebrow">Avatar</p>
+          <h3>修改头像？</h3>
+          <p>选择一张图片后，你可以框选要作为头像的区域。</p>
+        </div>
+        <div class="confirm-actions">
+          <button class="ghost-button" id="cancelAvatarChangeBtn" type="button">取消</button>
+          <button class="primary-button" id="confirmAvatarChangeBtn" type="button">选择图片</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="confirm-modal" id="appConfirmModal" aria-hidden="true">
+      <div class="confirm-dialog">
+        <div>
+          <p class="eyebrow" id="appConfirmEyebrow">Confirm</p>
+          <h3 id="appConfirmTitle">确认操作？</h3>
+          <p id="appConfirmMessage">这个操作需要确认后继续。</p>
+        </div>
+        <div class="confirm-actions">
+          <button class="ghost-button" id="appConfirmCancelBtn" type="button">取消</button>
+          <button class="primary-button" id="appConfirmOkBtn" type="button">确认</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="confirm-modal" id="appInputModal" aria-hidden="true">
+      <div class="confirm-dialog input-dialog">
+        <div>
+          <p class="eyebrow" id="appInputEyebrow">Task</p>
+          <h3 id="appInputTitle">输入内容</h3>
+          <p id="appInputMessage">填写后保存。</p>
+        </div>
+        <label class="modal-field" id="appInputField">
+          <span id="appInputLabel">内容</span>
+          <input id="appInputControl" />
+        </label>
+        <div class="confirm-actions">
+          <button class="ghost-button" id="appInputCancelBtn" type="button">取消</button>
+          <button class="primary-button" id="appInputOkBtn" type="button">保存</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
