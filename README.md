@@ -1,122 +1,79 @@
-# Astrel Local Blog Studio
+# Astrel 鏈湴浼樺厛涓汉鍗氬宸ヤ綔鍙?
+Astrel 鏄竴涓湰鍦颁紭鍏堢殑涓汉鍗氬涓庡涔犵鐞嗘闈㈠簲鐢ㄣ€傚畠鎶?Markdown 鍐欎綔銆佷换鍔℃墦鍗°€佽嚜鐢辩収鐗囧銆佺暘鑼勯挓銆佽€冪爺瀛︿範鍙般€佸崟璇嶅涔犮€佹垚灏辩郴缁熷拰浜屾鍏冮鏍间釜鎬у寲鐣岄潰鏁村悎鍦ㄤ竴璧枫€?
+椤圭洰褰撳墠浠ユ湰鍦颁娇鐢ㄤ负涓伙紝鍚屾椂涓哄悗缁敼閫犳垚鍏紑鑱旂綉鍗氬棰勭暀浜嗙粨鏋勩€?
+## 鍔熻兘鐗圭偣
 
-Astrel is a local-first personal blog and study desktop app. It combines Markdown writing, task check-ins, a photo wall, Pomodoro focus tracking, postgraduate exam planning, vocabulary review, achievements, and customizable anime-style themes.
+- Markdown 鍐欎綔锛氭敮鎸佸疄鏃堕瑙堛€佹爣绛俱€佸垎绫汇€佽崏绋裤€佸綊妗ｅ拰绾槄璇绘ā寮忋€?- 鎵撳崱娓呭崟锛氭敮鎸佸垪琛ㄨ鍥俱€佹湀瑙嗗浘銆佹棩绋嬭鍥俱€佹棩鏈熻烦杞拰閫炬湡浠诲姟鏄剧ず銆?- 浠诲姟绠＄悊锛氭敮鎸佸瓙浠诲姟銆佸彸閿彍鍗曘€佷紭鍏堢骇銆佸垎绫汇€佺鐩粦瀹氬拰瀹屾垚璁板綍銆?- 鑷敱鐓х墖澧欙細鏀寔澶氫釜鐓х墖澧欍€佷笂浼犮€佹嫋鍔ㄣ€佺缉鏀俱€佹棆杞€佸浘灞傝皟鏁淬€侀噸鍛藉悕鍜屽垹闄ゃ€?- 鐣寗閽熶笌姝ｈ鏃讹細鏀寔鏆傚仠銆侀噸缃€佺粨鏉熻褰曘€佽嚜瀹氫箟瀛︿範绉戠洰鍜屽涔犳椂闂寸粺璁°€?- 鑰冪爺瀛︿範鍙帮細鏀寔鍊掕鏃躲€佹瘡鏃ュ惎鍔ㄩ〉銆佸鐩樸€佸懆鎶ャ€佸涔犵儹鍔涘浘鍜屾垚灏卞窘绔犮€?- 鍗曡瘝澶嶄範锛氭敮鎸佽瘝搴撳鍏ャ€佽蹇嗘洸绾垮涔犺鍒掋€佺啛鎮夊害鎬昏鍜岄噸缃姛鑳姐€?- 涓€у寲澶栬锛氭敮鎸佸ご鍍忚鍓€佽儗鏅浘銆佽儗鏅煶涔愩€侀€忔槑搴︺€侀珮鏂ā绯娿€佹鏂囧瓧鍙峰拰榄旀硶鍏夋爣鏁堟灉銆?- 妗岄潰搴旂敤锛氭敮鎸?Electron 鎵撳寘涓?Windows 渚挎惡鐗?exe銆?- 鏈湴淇濆瓨锛氶€氳繃鏈湴鏈嶅姟鍜?Electron 鐢ㄦ埛鏁版嵁鐩綍淇濆瓨涓汉鏁版嵁銆?
+## 闅愮璇存槑
 
-The project is designed to run locally today and leave a clear path for future online publishing.
+杩欎釜鍏紑浠撳簱涓嶄細鍖呭惈浣犵殑涓汉杩愯鏁版嵁銆?
+浠ヤ笅鍐呭宸查€氳繃 `.gitignore` 鎺掗櫎锛?
+- `data/`锛氭枃绔犮€佷换鍔°€佷笓娉ㄨ褰曘€佽€冪爺璁板綍銆佽缃瓑鏈湴鏁版嵁銆?- `uploads/`锛氫笂浼犵殑鑳屾櫙鍥俱€佸ご鍍忋€侀煶涔愬拰鐓х墖澧欏浘鐗囥€?- `dist/`锛欵lectron 鎵撳寘浜х墿銆?- `node_modules/`锛氫緷璧栫洰褰曘€?- `*.log`锛氳繍琛屾棩蹇椼€?
+鍏紑鎴浘銆佸彂甯冪増鏈垨鍒嗕韩澶囦唤鍓嶏紝璇峰啀娆＄‘璁ゅ叾涓病鏈変釜浜虹瑪璁般€佸涔犺褰曘€佸ご鍍忋€佽儗鏅浘銆侀煶涔愭枃浠剁瓑闅愮鍐呭銆?
+## 鐜瑕佹眰
 
-## Features
+- Node.js 18 鎴栨洿鏂扮増鏈€?- npm銆?- 褰撳墠鎵撳寘鑴氭湰涓昏闈㈠悜 Windows銆?
+## 鏈湴杩愯
 
-- Markdown writing with live preview, tags, categories, drafts, archives, and a reading-only mode.
-- Daily task check-ins with list, month, and schedule views.
-- Subtasks, overdue task visibility, task context menu, priorities, categories, and subject binding.
-- Free-form photo walls with multiple walls, drag, resize, rotate, layer adjustment, rename, and delete.
-- Pomodoro and stopwatch focus modes with pause, custom subjects, focus records, and study-time charts.
-- Postgraduate exam dashboard with countdown, weekly reports, review planning, study heatmap, and achievement badges.
-- Vocabulary review with import support, memory-curve review planning, overview filters, and reset tools.
-- Custom profile, avatar cropping, background images, background music, theme transparency, blur, font size, and cursor effects.
-- Electron desktop packaging for Windows.
-- Local persistence through the bundled local server and Electron user data directory.
-
-## Privacy Notice
-
-This repository intentionally does not include personal runtime data.
-
-Ignored local-only content includes:
-
-- `data/` - saved posts, tasks, focus records, study data, and settings.
-- `uploads/` - uploaded backgrounds, avatars, music, and photo-wall images.
-- `dist/` - generated Electron builds.
-- `node_modules/` - installed dependencies.
-- `*.log` - runtime logs.
-
-Before publishing screenshots or releases, check that they do not expose private study records, personal notes, avatars, background images, or music files.
-
-## Requirements
-
-- Node.js 18 or newer.
-- npm.
-- Windows is recommended for the current Electron packaging script.
-
-## Local Development
-
-Install dependencies:
-
+瀹夎渚濊禆锛?
 ```bash
 npm install
 ```
 
-Run as a local web app:
+浠ユ湰鍦扮綉椤垫柟寮忚繍琛岋細
 
 ```bash
 npm start
 ```
 
-Then open:
-
+鐒跺悗鎵撳紑锛?
 ```text
 http://127.0.0.1:8766/
 ```
 
-Run as an Electron desktop app:
-
+浠?Electron 妗岄潰搴旂敤鏂瑰紡杩愯锛?
 ```bash
 npm run electron
 ```
 
-Build a Windows portable executable:
+鎵撳寘 Windows 渚挎惡鐗堬細
 
 ```bash
 npm run pack:win
 ```
 
-The generated executable will be placed under `dist/`.
-
-## Project Structure
+鎵撳寘缁撴灉浼氱敓鎴愬湪 `dist/` 鐩綍涓€?
+## 椤圭洰缁撴瀯
 
 ```text
 .
-├── index.html              # Main app markup
-├── styles.css              # Visual system, layout, animations, and themes
-├── app.js                  # Frontend state, rendering, and interactions
-├── server.js               # Local HTTP server and local persistence API
-├── electron-main.js        # Electron main process, tray, window, and data paths
-├── electron-preload.js     # Safe bridge between Electron and the web app
-├── assets/                 # Public app icons and static assets
-├── start-blog.bat          # Windows helper for starting the local server
-├── 词库导入格式.md          # Vocabulary import format guide
-└── 联网公开博客改造步骤.md   # Future online blog migration notes
-```
+鈹溾攢鈹€ index.html              # 搴旂敤涓婚〉闈㈢粨鏋?鈹溾攢鈹€ styles.css              # 瑙嗚绯荤粺銆佸竷灞€銆佸姩鐢诲拰涓婚鏍峰紡
+鈹溾攢鈹€ app.js                  # 鍓嶇鐘舵€併€佹覆鏌撻€昏緫鍜屼氦浜掗€昏緫
+鈹溾攢鈹€ server.js               # 鏈湴 HTTP 鏈嶅姟鍜屾湰鍦版暟鎹?API
+鈹溾攢鈹€ electron-main.js        # Electron 涓昏繘绋嬨€佺獥鍙ｃ€佹墭鐩樺拰鏁版嵁璺緞
+鈹溾攢鈹€ electron-preload.js     # Electron 涓庣綉椤典箣闂寸殑瀹夊叏妗ユ帴
+鈹溾攢鈹€ assets/                 # 搴旂敤鍥炬爣鍜屽叕鍏遍潤鎬佽祫婧?鈹溾攢鈹€ start-blog.bat          # Windows 鏈湴鍚姩鑴氭湰
+鈹溾攢鈹€ 璇嶅簱瀵煎叆鏍煎紡.md          # 鍗曡瘝璇嶅簱瀵煎叆鏍煎紡璇存槑
+鈹斺攢鈹€ 鑱旂綉鍏紑鍗氬鏀归€犳楠?md   # 鍚庣画鑱旂綉鍏紑鍗氬鏀归€犺鍒?```
 
-## Data Model
+## 鏁版嵁淇濆瓨鏂瑰紡
 
-The app currently stores runtime data locally:
+褰撳墠搴旂敤閲囩敤鏈湴浼樺厛鐨勬暟鎹瓥鐣ワ細
 
-- Web mode uses the local server APIs under `/api/state` and `/api/upload`.
-- Electron mode stores data in Electron's `userData` directory, not in the source repository.
+- 缃戦〉妯″紡閫氳繃 `/api/state` 鍜?`/api/upload` 淇濆瓨鏈湴鏁版嵁銆?- Electron 妯″紡浼氭妸鏁版嵁淇濆瓨鍒?Electron 鐨?`userData` 鐩綍锛岃€屼笉鏄簮鐮佷粨搴撱€?
+鍥犳锛屾簮鐮佸彲浠ュ畨鍏ㄥ叕寮€锛屼釜浜烘暟鎹粛鐒朵繚鐣欏湪鏈満銆?
+## 鍚庣画鑱旂綉鏀归€犳柟鍚?
+椤圭洰宸茬粡鎶婂簲鐢ㄩ€昏緫鍜屾暟鎹闂眰鍋氫簡鍒濇鍒嗙锛屽悗缁彲浠ラ€愭鏇挎崲涓鸿仈缃戠増鏈細
 
-This makes the project safe to publish as source code while keeping personal records on the user's machine.
-
-## Future Online Publishing Plan
-
-The codebase already separates app logic from persistence through the local API layer. A future online version can replace the local API with:
-
-- user authentication,
-- a real database,
-- object storage for images and music,
-- public/private post visibility,
-- synchronization between desktop and web,
-- deployment through a hosting platform.
-
-See `联网公开博客改造步骤.md` for a staged migration checklist.
-
-## Scripts
+- 鐢ㄦ埛鐧诲綍涓庢潈闄愮鐞嗐€?- 鏁版嵁搴撲繚瀛樻枃绔犮€佷换鍔°€佸涔犺褰曞拰璁剧疆銆?- 瀵硅薄瀛樺偍淇濆瓨鍥剧墖銆侀煶涔愮瓑涓婁紶璧勬簮銆?- 鏂囩珷鍏紑 / 绉佸瘑鍙鎬ф帶鍒躲€?- 妗岄潰绔笌缃戦〉绔悓姝ャ€?- 閮ㄧ讲鍒颁簯骞冲彴锛屽舰鎴愮湡姝ｇ殑鍏紑鍗氬銆?
+鍏蜂綋闃舵璁″垝瑙?`鑱旂綉鍏紑鍗氬鏀归€犳楠?md`銆?
+## 甯哥敤鍛戒护
 
 ```bash
-npm start       # Start the local server
+npm start       # 鍚姩鏈湴鏈嶅姟
 npm run electron
 npm run pack:win
 ```
 
-## Repository Status
-
-This is a personal local-first project. It is public for code sharing and future online-blog preparation, but user-generated local data is intentionally excluded.
+## 浠撳簱鐘舵€?
+杩欐槸涓€涓釜浜烘湰鍦颁紭鍏堥」鐩€備粨搴撳叕寮€鐢ㄤ簬浠ｇ爜鍒嗕韩銆佺増鏈鐞嗗拰鍚庣画鑱旂綉鍗氬鏀归€狅紝浣嗙敤鎴风敓鎴愮殑鏈湴鏁版嵁涓嶄細杩涘叆浠撳簱銆?
